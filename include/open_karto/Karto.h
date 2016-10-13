@@ -5641,7 +5641,7 @@ namespace karto
      * @param rScans
      * @param resolution
      */
-    static OccupancyGrid* CreateFromScans(const LocalizedRangeScanVector& rScans, kt_double resolution)
+    static OccupancyGrid* CreateFromScans(const LocalizedRangeScanVector& rScans, kt_double resolution, kt_int32u minPassThrough = 2, kt_double occupancyThreshold = 0.1)
     {
       if (rScans.empty())
       {
@@ -5652,6 +5652,8 @@ namespace karto
       Vector2<kt_double> offset;
       ComputeDimensions(rScans, resolution, width, height, offset);
       OccupancyGrid* pOccupancyGrid = new OccupancyGrid(width, height, offset, resolution);
+      pOccupancyGrid->SetMinPassThrough(minPassThrough);
+      pOccupancyGrid->SetOccupancyThreshold(occupancyThreshold);
       pOccupancyGrid->CreateFromScans(rScans);
 
       return pOccupancyGrid;
